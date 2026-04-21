@@ -1,5 +1,5 @@
 {
-  description = "A flake for running a python script with uv";
+  description = "MLIR Language Support for sublime text 4+";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -10,11 +10,19 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        test_grammar = pkgs.writeShellScriptBin "run test" ''
-          cat mlir.sublime-syntax > "$(${pkgs.bat} --config-dir)/syntaxes/mlir.sublime-syntax"
+        test_grammar = pkgs.writeShellScriptBin "run-test" ''
+          export PATH="${pkgs.coreutils}/bin:${pkgs.bat}/bin:$PATH"
+          CONF_DIR=$(${pkgs.bat}/bin/bat --config-dir)
+          echo "Creating config directory at $CONF_DIR"
+          mkdir -p "$CONF_DIR/syntaxes"
+          cp ${./mlir.sublime-syntax} "$CONF_DIR/syntaxes/mlir.sublime-syntax"
           bat cache --build
-          cat sample.mlir | bat -lmlir
-        '';
+          if [ -f "sample.mlir" ]; then
+            cat sample.mlir | bat -l mlir
+          else
+            echo "Error: sample.mlir not found."
+          fi
+'';
       in
       {
 
@@ -26,7 +34,7 @@
 
         apps.default = {
           type = "app";
-          program = test_grammar;
+          program = "${test_grammar}/bin/run-test";
         };
       }
     );
