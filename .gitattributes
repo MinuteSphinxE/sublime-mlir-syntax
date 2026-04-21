@@ -1,0 +1,12 @@
+
+.* export-ignore
+
+
+*.lock         export-ignore
+*.nix          export-ignore
+*.png          export-ignore
+*.mlir         export-ignore
+*.png          export-ignore
+
+.gitignore      export-ignore
+.gitattributes  export-ignore
