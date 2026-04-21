@@ -16,7 +16,7 @@ Names of the scopes are available [here](https://www.sublimetext.com/docs/3/scop
 
 The real reason this exists is for use with [`bat`](https://github.com/sharkdp/bat) which uses [`syntect`](https://github.com/trishume/syntect/) (meaning grammars used with it have to be in `sublime-syntax` form) and [supports external language definitions](https://github.com/sharkdp/bat#adding-new-syntaxes--language-definitions).
 
-## Installation
+## Preview
 
 ### Nix
 
